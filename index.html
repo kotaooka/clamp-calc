@@ -141,6 +141,10 @@ table.res tr + tr { border-top: 1px solid var(--grid); }
 footer { font-size: .78rem; color: var(--muted); }
 footer a { color: inherit; }
 #toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(20px + env(safe-area-inset-bottom, 0px)); background: var(--ink); color: var(--surface); padding: 8px 14px; border-radius: 999px; font-size: .85rem; }
+
+/* 支援リンク（DESIGN.md 4章）：本文の文字色を引き継ぎ、印刷では隠す */
+.support a { color: inherit; white-space: nowrap; }
+@media print { .support { display: none !important; } }
 </style>
 </head>
 <body>
@@ -231,7 +235,7 @@ footer a { color: inherit; }
     <h2>計算のしかた</h2>
     <p class="hint">4 節リンク（台座・押えアーム・カップラ・ロッカ）を剛体として動かし、スピンドル先端 S が当たり面より下に入る量 δ に等価剛性 k を掛けて締圧力 F = k·δ とします。当たり面の高さは、死点で δ = e になる高さです。ハンドル操作力は仮想仕事の原理（F·dδ = 操作力 × 握りの移動量のうちハンドルに直角な成分）で求め、握りにハンドルと直角に掛ける力として表します。摩擦・自重・戻しばね、部材ごとのたわみの違いは入れていません。リンク力と支点の反力は、ハンドル操作力が 0 になる死点で出します。</p>
   </div>
-  <footer>計算は端末の中だけで行い、入力した値はどこにも送信しません。一度開けばオフラインでも使えます。<a href="https://github.com/kotaooka/clamp-calc">GitHub</a> ・ MIT License</footer>
+  <footer>計算は端末の中だけで行い、入力した値はどこにも送信しません。一度開けばオフラインでも使えます。<a href="https://github.com/kotaooka/clamp-calc">GitHub</a> ・ MIT License<span class="support"> ・ <a href="https://buymeacoffee.com/kotaooka" target="_blank" rel="noopener"><span aria-hidden="true">☕</span> 開発を応援する（Buy Me a Coffee）</a></span></footer>
 </main>
 <div id="toast" hidden></div>
 
