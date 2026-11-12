@@ -165,7 +165,7 @@ footer a { color: inherit; }
       <div class="box">
         <h2>クランプの形（ロックした姿勢）</h2>
         <div class="seg full" id="type" role="group" aria-label="ハンドルの付き方"><button type="button" data-v="arm" aria-pressed="true">押えアームに<br>ハンドルが付く</button><button type="button" data-v="base" aria-pressed="false">台座に<br>ハンドルが付く</button></div>
-        <p class="hint">ハンドルを閉じてストッパに当たった姿勢の座標を mm で入れてください。Y は上向きです。図の ○ をドラッグしても変えられます。</p>
+        <p class="hint">ハンドルを閉じてストッパに当たった姿勢の座標をmmで入れてください。Yは上向きです。図の ○ をドラッグしても変えられます。</p>
         <table class="pts" id="pts"></table>
         <div class="row"><button class="btn" type="button" id="example">例を入れる</button></div>
         <p class="hint">例の寸法は動きを見るための架空の値で、実在の製品の寸法ではありません。</p>
@@ -176,12 +176,12 @@ footer a { color: inherit; }
           <div class="field"><label for="k">等価剛性 <b>k</b> [N/mm]</label><input type="text" id="k" inputmode="decimal"></div>
           <div class="field"><label for="e">調整量 <b>e</b> [mm]</label><input type="text" id="e" inputmode="decimal"></div>
         </div>
-        <p class="hint">k はクランプ本体・スピンドル・ワークをまとめた、スピンドル先端でのばね定数です。e は、死点の位置でスピンドルがちょうど当たる状態から、さらにねじ込んだ量です。</p>
+        <p class="hint">kはクランプ本体・スピンドル・ワークをまとめた、スピンドル先端でのばね定数です。eは、死点の位置でスピンドルがちょうど当たる状態から、さらにねじ込んだ量です。</p>
         <div class="sub">
           <p class="hint">回転数から調整量を入れる（調整量 = 回転数 × ピッチ）</p>
           <div class="fields">
             <div class="field"><label for="turns">ねじ込み回転数</label><input type="text" id="turns" inputmode="decimal"></div>
-            <div class="field"><label for="pitch">ねじのピッチ [mm]</label><input type="text" id="pitch" inputmode="decimal" placeholder="M10 なら 1.5"></div>
+            <div class="field"><label for="pitch">ねじのピッチ [mm]</label><input type="text" id="pitch" inputmode="decimal" placeholder="M10なら1.5"></div>
           </div>
           <div class="row"><button class="btn" type="button" id="toE">調整量に入れる</button></div>
         </div>
@@ -198,7 +198,7 @@ footer a { color: inherit; }
           <div class="field"><label for="rf">締圧力 [N]</label><input type="text" id="rf" inputmode="decimal"></div>
           <div class="field"><label for="rr">そのスピンドル位置 [mm]</label><input type="text" id="rr" inputmode="decimal"></div>
         </div>
-        <p class="hint">カタログの締圧力は、スピンドルを支点に最も近い穴に付けたときの値です。スピンドル位置は支点 A からの水平距離で入れてください。入れたスピンドル位置での許容値は、支点からの距離に反比例するとみなして換算します。</p>
+        <p class="hint">カタログの締圧力は、スピンドルを支点に最も近い穴に付けたときの値です。スピンドル位置は支点Aからの水平距離で入れてください。入れたスピンドル位置での許容値は、支点からの距離に反比例するとみなして換算します。</p>
       </div>
     </div>
 
@@ -221,19 +221,19 @@ footer a { color: inherit; }
         </div>
         <div class="figure" id="plot"></div>
         <div class="legend"><span style="--c:var(--s1)">締圧力</span><span style="--c:var(--s2)">ハンドル操作力</span><span class="dash" style="--c:var(--muted)">当たり始め・死点・ロック</span></div>
-        <p class="hint">横軸は死点を 0° としたハンドル角で、閉じる向きが正です。操作力が負のところは、手を離してもハンドルが閉じる向きに回ります。グラフを横になぞると上の図も動きます。</p>
+        <p class="hint">横軸は死点を0° としたハンドル角で、閉じる向きが正です。操作力が負のところは、手を離してもハンドルが閉じる向きに回ります。グラフを横になぞると上の図も動きます。</p>
       </div>
       <div class="box">
         <h2>結果</h2>
         <div id="res"></div>
-        <div class="row"><button class="btn" type="button" id="copy">結果をコピー（Excel 用）</button></div>
+        <div class="row"><button class="btn" type="button" id="copy">結果をコピー（Excel用）</button></div>
       </div>
     </div>
   </section>
 
   <div class="box">
     <h2>計算のしかた</h2>
-    <p class="hint">4 節リンク（台座・押えアーム・カップラ・ロッカ）を剛体として動かし、スピンドル先端 S が当たり面より下に入る量 δ に等価剛性 k を掛けて締圧力 F = k·δ とします。当たり面の高さは、死点で δ = e になる高さです。ハンドル操作力は仮想仕事の原理（F·dδ = 操作力 × 握りの移動量のうちハンドルに直角な成分）で求め、握りにハンドルと直角に掛ける力として表します。摩擦・自重・戻しばね、部材ごとのたわみの違いは入れていません。リンク力と支点の反力は、ハンドル操作力が 0 になる死点で出します。</p>
+    <p class="hint">4節リンク（台座・押えアーム・カップラ・ロッカ）を剛体として動かし、スピンドル先端Sが当たり面より下に入る量δに等価剛性kを掛けて締圧力F = k·δとします。当たり面の高さは、死点でδ = eになる高さです。ハンドル操作力は仮想仕事の原理（F·dδ = 操作力 × 握りの移動量のうちハンドルに直角な成分）で求め、握りにハンドルと直角に掛ける力として表します。摩擦・自重・戻しばね、部材ごとのたわみの違いは入れていません。リンク力と支点の反力は、ハンドル操作力が0になる死点で出します。</p>
   </div>
   <footer>
     <a href="https://github.com/kotaooka/clamp-calc">GitHub</a> ・ MIT License<span class="support"> ・ <a href="https://buymeacoffee.com/kotaooka" target="_blank" rel="noopener"><span aria-hidden="true">☕</span> 開発を応援する（Buy Me a Coffee）</a></span>

@@ -46,10 +46,10 @@
     const names = ['A', 'B', 'C', 'D', 'S', 'H'];
     for (const k of names) {
       const p = P[k];
-      if (!p || !Number.isFinite(p[0]) || !Number.isFinite(p[1])) return `点 ${k} の座標を入れてください。`;
+      if (!p || !Number.isFinite(p[0]) || !Number.isFinite(p[1])) return `点${k}の座標を入れてください。`;
     }
     const pairs = [['A', 'B', '押えアーム（A–B）'], ['B', 'C', 'カップラ（B–C）'], ['C', 'D', 'ロッカ（C–D）'], ['A', 'D', '台座（A–D）']];
-    for (const [p, q, name] of pairs) if (len(sub(P[p], P[q])) < 1e-6) return `${name}の長さが 0 です。点を離してください。`;
+    for (const [p, q, name] of pairs) if (len(sub(P[p], P[q])) < 1e-6) return `${name}の長さが0です。点を離してください。`;
     return null;
   }
 
@@ -86,9 +86,9 @@
     const P = o.P, type = o.type === 'base' ? 'base' : 'arm';
     const bad = checkPoints(P);
     if (bad) return { error: bad };
-    if (!(o.k > 0)) return { error: '等価剛性は 0 より大きい値を入れてください。' };
-    if (!(o.e >= 0)) return { error: '調整量は 0 以上の値を入れてください。' };
-    if (!(o.op > 0 && o.op <= 180)) return { error: 'ハンドル操作角度は 0 より大きく 180° 以下で入れてください。' };
+    if (!(o.k > 0)) return { error: '等価剛性は0より大きい値を入れてください。' };
+    if (!(o.e >= 0)) return { error: '調整量は0以上の値を入れてください。' };
+    if (!(o.op > 0 && o.op <= 180)) return { error: 'ハンドル操作角度は0より大きく180° 以下で入れてください。' };
 
     const poser = makePoser(P, type);
     const ref = poser.at(poser.psi0, P.B);

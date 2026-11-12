@@ -35,7 +35,7 @@
   function buildTable() {
     const d = DESC[st.type];
     $('pts').innerHTML = `<tr><th></th><th>X [mm]</th><th>Y [mm]</th></tr>` + NAMES.map(k =>
-      `<tr><th><b>${k}</b><small>${esc(d[k])}</small></th><td><input type="text" inputmode="decimal" id="p-${k}-0" aria-label="${k} の X"></td><td><input type="text" inputmode="decimal" id="p-${k}-1" aria-label="${k} の Y"></td></tr>`).join('');
+      `<tr><th><b>${k}</b><small>${esc(d[k])}</small></th><td><input type="text" inputmode="decimal" id="p-${k}-0" aria-label="${k}のX"></td><td><input type="text" inputmode="decimal" id="p-${k}-1" aria-label="${k}のY"></td></tr>`).join('');
     NAMES.forEach(k => [0, 1].forEach(j => {
       const el = $(`p-${k}-${j}`); el.value = st.P[k][j];
       el.addEventListener('input', () => { st.P[k][j] = el.value; atLock(); save(); render(); });
@@ -176,7 +176,7 @@
       const acc = css('--accent');
       NAMES.forEach(k => {
         const [x, y] = F.P(lockP[k]);
-        s += `<circle cx="${x}" cy="${y}" r="7" fill="none" stroke="${acc}" stroke-width="2" pointer-events="none"/><circle class="hd" data-k="${k}" cx="${x}" cy="${y}" r="18" fill="${acc}" fill-opacity="0"><title>${k} をドラッグして動かす</title></circle>`;
+        s += `<circle cx="${x}" cy="${y}" r="7" fill="none" stroke="${acc}" stroke-width="2" pointer-events="none"/><circle class="hd" data-k="${k}" cx="${x}" cy="${y}" r="18" fill="${acc}" fill-opacity="0"><title>${k}をドラッグして動かす</title></circle>`;
       });
     }
     $('mech').innerHTML = s + '</svg>';
@@ -252,7 +252,7 @@
     // 目盛（横軸）
     const yb = T + 2 * ph + gap;
     xt.t.forEach(v => { s += `<text x="${X(v)}" y="${yb + 15}" font-size="11" fill="${ink2}" text-anchor="middle" font-family="${num}">${esc(fmt(v, xt.step < 1 ? 1 : 0))}</text>`; });
-    s += `<text x="${W - R}" y="${yb + 28}" font-size="11" fill="${ink2}" text-anchor="end">ハンドル角（死点 0°）[°]</text>`;
+    s += `<text x="${W - R}" y="${yb + 28}" font-size="11" fill="${ink2}" text-anchor="end">ハンドル角（死点0°）[°]</text>`;
     // 当たり始め・死点・ロックの線
     const marks = [[res.phiContact, '当たり'], [0, '死点'], [pEnd, 'ロック']];
     marks.forEach(([v, t], j) => {
@@ -261,7 +261,7 @@
       s += `<text x="${x + (j === 2 ? -4 : 4)}" y="${yb - 6}" font-size="10.5" fill="${mut}" text-anchor="${j === 2 ? 'end' : 'start'}">${t}</text>`;
     });
     // 最大操作力の点
-    { const x = X(res.phiFhMax), y = panels[1].Y(res.FhMax); s += `<circle cx="${x}" cy="${y}" r="3.5" fill="${panels[1].c}"/><text x="${x + 7}" y="${y + 4}" font-size="11" fill="${ink2}" font-family="${num}">最大 ${esc(fN(res.FhMax))} N</text>`; }
+    { const x = X(res.phiFhMax), y = panels[1].Y(res.FhMax); s += `<circle cx="${x}" cy="${y}" r="3.5" fill="${panels[1].c}"/><text x="${x + 7}" y="${y + 4}" font-size="11" fill="${ink2}" font-family="${num}">最大${esc(fN(res.FhMax))} N</text>`; }
     // 今のハンドル角
     const ic = curIndex(), vc = res.phi[ic];
     if (vc >= xmin) {
@@ -333,26 +333,26 @@
     const add = (th, v, u, sub, extra) => { h += row(th, v, u, sub, extra); copyRows.push([th, v.replace(/,/g, ''), u]); };
     add('最大締圧力', fN(res.Fpeak), 'N', '死点を通るとき（k × e）',
       res.allow ? `<span class="judge ${res.allow.ok ? 'ok' : 'ng'}">${res.allow.ok ? '○ 許容内' : '✕ 超過'}</span>` : '');
-    add('ロック時の締圧力', fN(res.Flock), 'N', `死点越えでスピンドルが ${fmt(res.dropLock, 3)} mm 戻った分を引いた値`);
+    add('ロック時の締圧力', fN(res.Flock), 'N', `死点越えでスピンドルが${fmt(res.dropLock, 3)} mm戻った分を引いた値`);
     add('死点越え角', fA(res.beta), '°', 'ロック位置が死点を越えている角度（ハンドル）');
-    add('当たり始め', res.phiContact == null ? '―' : fA(res.phiContact), '°', '死点を 0° としたハンドル角');
-    add('最大ハンドル操作力', fN(res.FhMax), 'N', `ハンドル角 ${fA(res.phiFhMax)}° のとき。握りにハンドルと直角に掛ける力`);
+    add('当たり始め', res.phiContact == null ? '―' : fA(res.phiContact), '°', '死点を0° としたハンドル角');
+    add('最大ハンドル操作力', fN(res.FhMax), 'N', `ハンドル角${fA(res.phiFhMax)}° のとき。握りにハンドルと直角に掛ける力`);
     add('死点でのリンク力', fN(Math.abs(res.FLink)), 'N', res.FLink >= 0 ? '圧縮' : '引張');
-    add('死点での支点 A の反力', fN(res.RA), 'N', '押えアームの支点ピンに掛かる力');
-    if (res.allow) add('許容締圧力（カタログ換算）', fN(res.allow.F), 'N', `スピンドル位置 ${fmt(res.allow.r, 1)} mm での換算値`);
-    add('押えアームの開き角', fA(res.armOpen), '°', `全開でスピンドルが ${fmt(res.liftOpen, 1)} mm 上がる`);
+    add('死点での支点Aの反力', fN(res.RA), 'N', '押えアームの支点ピンに掛かる力');
+    if (res.allow) add('許容締圧力（カタログ換算）', fN(res.allow.F), 'N', `スピンドル位置${fmt(res.allow.r, 1)} mmでの換算値`);
+    add('押えアームの開き角', fA(res.armOpen), '°', `全開でスピンドルが${fmt(res.liftOpen, 1)} mm上がる`);
     h += '</table>';
     $('res').innerHTML = h;
     copyRows.unshift(['ハンドルの付き方', st.type === 'arm' ? '押えアームに付く' : '台座に付く', ''],
-      ...NAMES.map(k => [`点 ${k}（X, Y）`, `${inp.P[k][0]}, ${inp.P[k][1]}`, 'mm']),
-      ['等価剛性 k', String(inp.k), 'N/mm'], ['調整量 e', String(inp.e), 'mm'], ['ハンドル操作角度', String(inp.op), '°']);
+      ...NAMES.map(k => [`点${k}（X, Y）`, `${inp.P[k][0]}, ${inp.P[k][1]}`, 'mm']),
+      ['等価剛性k', String(inp.k), 'N/mm'], ['調整量e', String(inp.e), 'mm'], ['ハンドル操作角度', String(inp.op), '°']);
 
     // 注意と判定の理由
     if (res.beta < 0.05) msgs.push(['warn', '! ロック位置が死点とほぼ同じです。ストッパで死点を少し越えた位置に止まるようにしないと、ワークからの反力でハンドルが開くおそれがあります。']);
-    if (res.Flock <= 0) msgs.push(['err', '× ロック位置ではスピンドルが当たり面から離れ、締圧力が 0 です。調整量を増やすか、死点越え角を小さくしてください。']);
+    if (res.Flock <= 0) msgs.push(['err', '× ロック位置ではスピンドルが当たり面から離れ、締圧力が0です。調整量を増やすか、死点越え角を小さくしてください。']);
     if (res.contactAtOpen) msgs.push(['warn', '! 全開でもスピンドルが当たり面に届いています。調整量か開き角を見直してください。']);
-    if (res.end !== 'op') msgs.push(['warn', `! ハンドルは ${fA(res.opReached)}° までしか開けません（${res.end === 'reverse' ? 'ハンドルの回る向きが逆になる' : 'リンクがそれ以上動かない'}ため）。そこまでで計算しています。`]);
-    if (res.allow && !res.allow.ok) msgs.push(['err', `× 最大締圧力 ${fN(res.Fpeak)} N が、このスピンドル位置でのカタログ換算の許容値 ${fN(res.allow.F)} N を超えています。調整量を減らすか、スピンドルを支点に近づけてください。`]);
+    if (res.end !== 'op') msgs.push(['warn', `! ハンドルは${fA(res.opReached)}° までしか開けません（${res.end === 'reverse' ? 'ハンドルの回る向きが逆になる' : 'リンクがそれ以上動かない'}ため）。そこまでで計算しています。`]);
+    if (res.allow && !res.allow.ok) msgs.push(['err', `× 最大締圧力${fN(res.Fpeak)} Nが、このスピンドル位置でのカタログ換算の許容値${fN(res.allow.F)} Nを超えています。調整量を減らすか、スピンドルを支点に近づけてください。`]);
     if (!res.allow && (String(st.rf).trim() === '' || String(st.rr).trim() === '')) msgs.push(['info', 'カタログの締圧力とそのスピンドル位置を入れると、許容値と比べて判定します。']);
     $('msgs').innerHTML = msgs.map(([k, t]) => `<div class="msg ${k}">${esc(t)}</div>`).join('');
   }
@@ -367,7 +367,7 @@
     if (document.activeElement !== ang) ang.value = cur == null ? p[p.length - 1] : cur;
     const phi = p[i];
     const where = i === p.length - 1 ? '（ロック位置）' : phi < (res.phiContact ?? -Infinity) ? '（当たる前）' : '';
-    $('angLabel').textContent = `ハンドル角（死点 0°、閉じる向きが正）${where}`;
+    $('angLabel').textContent = `ハンドル角（死点0°、閉じる向きが正）${where}`;
     $('readout').innerHTML = `<div><span>ハンドル角</span><b>${esc(fA(phi))}</b> <small>°</small></div><div><span>締圧力</span><b>${esc(fN(res.F[i]))}</b> <small>N</small></div><div><span>操作力</span><b>${esc(fN(res.Fh[i]))}</b> <small>N</small></div>`;
   }
   function render() {
@@ -381,12 +381,12 @@
   $('copy').addEventListener('click', () => {
     if (!copyRows.length) { toast('先に正しい値を入れてください'); return; }
     const text = copyRows.map(r => r.join('\t')).join('\n');
-    const done = () => toast('コピーしました。Excel に貼り付けられます');
+    const done = () => toast('コピーしました。Excelに貼り付けられます');
     if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(done, fallback); else fallback();
     function fallback() {
       const ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select();
       let ok = false; try { ok = document.execCommand('copy'); } catch (e) { /* 失敗 */ }
-      ta.remove(); toast(ok ? 'コピーしました。Excel に貼り付けられます' : 'コピーできませんでした。表を選んでコピーしてください');
+      ta.remove(); toast(ok ? 'コピーしました。Excelに貼り付けられます' : 'コピーできませんでした。表を選んでコピーしてください');
     }
   });
 
