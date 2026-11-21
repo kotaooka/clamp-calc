@@ -19,8 +19,6 @@ tests/test.js          検算テスト
 
 ## 更新して公開するとき
 
-- `index.html`・`js/`・`icons/` を変更したら、**`sw.js` 先頭の `VERSION` を必ず上げてから** push してください。上げないと、すでに使っている人の端末に古いファイルが残り続けます
-- 画面の見た目を変えたときは、`docs/screenshots/` の画像と `og.png` も撮り直してください（撮影手順は `tools/screenshots.py` の先頭）
 - GitHub Pages は main ブランチのルートを公開しています
 
 ## テスト
